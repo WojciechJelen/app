@@ -4,6 +4,7 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import { Provider, Program } from "@project-serum/anchor";
 import idl from "@/idl/solana_twitter.json";
 
+const clusterUrl = process.env.VUE_APP_CLUSTER_URL;
 const programID = new PublicKey(idl.metadata.address);
 let workspace = null;
 
@@ -11,10 +12,7 @@ export const useWorkspace = () => workspace;
 
 export const initWorkspace = () => {
   const wallet = useAnchorWallet();
-  const connection = new Connection(
-    "https://api.devnet.solana.com",
-    "processed"
-  );
+  const connection = new Connection(clusterUrl, "processed");
   const provider = computed(
     () =>
       new Provider(connection, wallet.value, {
